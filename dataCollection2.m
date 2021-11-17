@@ -8,13 +8,16 @@ algo = wifisensAlgo_v2();
 BW = 80;        
 CHIP = '4358';
 
-csiBuff=[];
-rawCSIBuff = [];
-timeBuff=[];
+% csiBuff=[];
+% rawCSIBuff = [];
+% timeBuff=[];
+% RRTimeVER = [];
+% initCSIBuff =[];
+% delayBuff = [];
+
 sysTimeBuff = [];
-RRTimeVER = [];
-initCSIBuff =[];
-delayBuff = [];
+antenna1 = Antenna(0);
+antenna2 = Antenna(1);
 
 if BW ==20
     pkt_len = 83;                                   % # of 32 bit chunks to extract for a packet
@@ -52,14 +55,24 @@ while(1)
 %         end
         
 %         curCSI = abs(curCSI);
-        csiBuff=[csiBuff;curCSI];
-        rawCSIBuff = [rawCSIBuff; csi_buff_raw];
+%         csiBuff=[csiBuff;curCSI];
+%         rawCSIBuff = [rawCSIBuff; csi_buff_raw];
+%         
+%         [curDelay, curSysTime] = algo.showDelay(curTime);
+%         timeBuff = [timeBuff curTime];
+%         sysTimeBuff = [sysTimeBuff curSysTime];
+%         delayBuff = [delayBuff curDelay];
         
+
         [curDelay, curSysTime] = algo.showDelay(curTime);
-        timeBuff = [timeBuff curTime];
         sysTimeBuff = [sysTimeBuff curSysTime];
-        delayBuff = [delayBuff curDelay];
-        
+    
+%       Filtering on the basis of the antenna radio
+        if(frameOut.coreNum == 0)
+            antenna1 = antenna1.populateBuffers(curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
+        else
+            antenna2 = antenna2.populateBuffers(curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
+        end
 %         if(size(csiBuff,1) > 100)
 %             csiBuff(1,:) = [];
 %             timeBuff(1) = [];
