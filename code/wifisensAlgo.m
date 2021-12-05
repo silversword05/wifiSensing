@@ -1,4 +1,4 @@
-classdef wifisensAlgo_v3
+classdef wifisensAlgo
     %UNTITLED Summary of this class goes here
     %   Detailed explanation goes here
     

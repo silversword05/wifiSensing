@@ -8,9 +8,12 @@ algo = wifisensAlgo();
 BW = 80;        
 CHIP = '4358';
 
+acceptableDelay = 10;
+
 sysTimeBuff = [];
-antenna1 = Antenna(0);
-antenna2 = Antenna(1);
+stream1 = Stream(0);
+stream2 = Stream(1);
+stream3 = Stream(2);
 
 if BW ==20
     pkt_len = 83;                                   % # of 32 bit chunks to extract for a packet
@@ -59,16 +62,31 @@ while(1)
         
         [curDelay, curSysTime] = algo.showDelay(curTime);
         sysTimeBuff = [sysTimeBuff curSysTime];
-    
+        disp(curSysTime);
 %       Filtering on the basis of the antenna radio
-        if(frameOut.coreNum == 0 && frameOut.sstreamNum == 0)
-            antenna1 = antenna1.populateBuffers(curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
-        elseif(frameOut.coreNum == 1 && frameOut.sstreamNum == 0)
-            antenna2 = antenna2.populateBuffers(curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
+        switch frameOut.sstreamNum
+            case 0
+                stream1 = stream1.process_data(frameOut.coreNum, curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
+            case 1
+                stream2 = stream2.process_data(frameOut.coreNum, curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
+            case 2
+                stream3 = stream3.process_data(frameOut.coreNum, curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
         end
+        % stop collecting data after 5 minutes
+        if((sysTimeBuff(end) - sysTimeBuff(1))/1e3 > 30)
+            stream1 = stream1.merge_buffers(acceptableDelay);
+            stream2 = stream2.merge_buffers(acceptableDelay);
+            stream3 = stream3.merge_buffers(acceptableDelay);
+            
+            N1 = size(stream1.pdSignal,1);
+            N2 = size(stream2.pdSignal,1);
+            N3 = size(stream3.pdSignal,1);
 
-        if((sysTimeBuff(end) - sysTimeBuff(1))/1e3 > 60)
-            save('data/csi-signal.mat', 'antenna1', 'antenna2')
+            N = min([N1 N2 N3]);
+
+            pd_signal = cat(3, stream1.pdSignal(1:N,:), stream2.pdSignal(1:N,:), stream3.pdSignal(1:N,:));
+            save('data/pd_signal.mat', 'pd_signal');
+            save('data/csi_signal.mat',"stream1","stream2","stream3")
             keyboard
         end
 

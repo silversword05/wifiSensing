@@ -1,6 +1,6 @@
 classdef Antenna
    properties
-      Value {mustBeNumeric}
+      coreNum {mustBeNumeric}
       csiBuff=[]
       rawCSIBuff = [];
       timeBuff=[];
@@ -8,14 +8,10 @@ classdef Antenna
       delayBuff = [];
    end
    methods
-        function obj = Antenna(val)
-            if(val == 0)
-                obj.Value = 1;
-            else
-                obj.Value = 2;
-            end
+       function obj = Antenna(coreNum)
+            obj.coreNum = coreNum;
         end
-        function antenna = populateBuffers(antenna, curCSI, csi_buff_raw, curTime, curSysTime, curDelay)
+        function antenna = populate_buffer(antenna, curCSI, csi_buff_raw, curTime, curSysTime, curDelay)
             antenna.csiBuff=[antenna.csiBuff;curCSI];
             antenna.rawCSIBuff = [antenna.rawCSIBuff; csi_buff_raw];
             antenna.timeBuff = [antenna.timeBuff curTime];

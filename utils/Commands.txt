@@ -1,8 +1,6 @@
 adb forward tcp:11233 tcp:11233
 
 ifconfig wlan0 up
-nexutil -Iwlan0 -s500 -b -l34 -vm+IBEQAAAQA8fD8wNoQAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+nexutil -Iwlan0 -s500 -b -l34 -vm+IBdwAAAQA8fD8wNoQAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 nexutil -Iwlan0 -m1
 tcpdump -i wlan0 dst port 5500 -w - | nc -l 11233
-
-
