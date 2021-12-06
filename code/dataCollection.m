@@ -57,7 +57,7 @@ while(1)
                 stream3 = stream3.process_data(frameOut.coreNum, curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
         end
         % stop collecting data after 5 minutes
-        if((sysTimeBuff(end) - sysTimeBuff(1))/1e3 > 30)
+        if((sysTimeBuff(end) - sysTimeBuff(1))/1e3 > 240)
             stream1 = stream1.merge_buffers(acceptableDelay);
             stream2 = stream2.merge_buffers(acceptableDelay);
             stream3 = stream3.merge_buffers(acceptableDelay);
