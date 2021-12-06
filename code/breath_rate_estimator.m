@@ -1,15 +1,10 @@
 % beacon frames sent out every few ms
 beacon_interval = 25;
 
-% load the spatial stream objects containing the csi buffers
-ss1_ant1 = load('data/csi-signal.mat', 'antenna1');
-ss1_ant2 = load('data/csi-signal.mat', 'antenna2');
-
-% compute the phase difference of the two antennas of a spatial stream
-ss1 = ss1_ant1.csi_buff .* conj(ss1_ant2.csi_buff);
-pd_signal = angle(ss1);
+% load the phase difference data of all spatial streams
+pd_signal = load('data/pd_signal.mat', 'pd_signal');
 % filter the breathing frequencies using bandpass filter
-filtered_signal = bandpass(pd_signal, [0.1 0.6], 40);
+filtered_signal = bandpass(pd_signal(:,:,1), [0.1 0.6], 40);
 % apply fft to filtered signal to get the response of frequency domain
 N = size(filtered_signal,1);
 % apply fft only to a window of 200 samples (5s) with step size of 1s

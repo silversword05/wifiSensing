@@ -43,26 +43,10 @@ while(1)
         frame_idx = find(data == len_field,1) - 2;                          % Find Index of the length field
         frame = data((frame_idx : frame_idx + pkt_len - 1));                % Extract Header + Payload
         [curTime, curCSI, csi_buff_raw,frameOut] = frame2CSI(frame,BW,CHIP);                 % Find the CSI of current Pkt
-        
-        
-%         csiAbs = abs(curCSI);        
-%         if sum(csiAbs(selectedSC))/sum(csiAbs)>0.6
-%             pktcnt = pktcnt + 1;
-%             continue
-%         end
-        
-%         curCSI = abs(curCSI);
-%         csiBuff=[csiBuff;curCSI];
-%         rawCSIBuff = [rawCSIBuff; csi_buff_raw];
-%         
-%         [curDelay, curSysTime] = algo.showDelay(curTime);
-%         timeBuff = [timeBuff curTime];
-%         sysTimeBuff = [sysTimeBuff curSysTime];
-%         delayBuff = [delayBuff curDelay];
+
         
         [curDelay, curSysTime] = algo.showDelay(curTime);
         sysTimeBuff = [sysTimeBuff curSysTime];
-        disp(curSysTime);
 %       Filtering on the basis of the antenna radio
         switch frameOut.sstreamNum
             case 0
@@ -89,15 +73,6 @@ while(1)
             save('data/csi_signal.mat',"stream1","stream2","stream3")
             keyboard
         end
-
-%       if(mod(pktcnt,50) == 0)
-%           algo.plotCSIBuff(abs(csiBuff(1:size(timeBuff,2),:)),timeBuff,1)
-%       end
-
     end
     pktcnt = pktcnt+1;
 end
-
-%         if pktcnt >51
-%             algo.plotCSIBuff(initCSIBuff,timeBuff_s,1)            
-%         end

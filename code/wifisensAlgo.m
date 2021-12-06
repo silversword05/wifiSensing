@@ -129,7 +129,7 @@ classdef wifisensAlgo
          delay=seconds(date2-date)-msec/1000;
 %          mod(curTime,10e3)
          
-         fprintf('pkt delay is:%.3f \n',delay)
+         %fprintf('pkt delay is:%.3f \n',delay)
         end
         function [delay, curSysTime]=showDelay(obj,curTime)
             sec = floor(curTime/1000);
@@ -139,7 +139,7 @@ classdef wifisensAlgo
              msec2 = (posixtime(date2) - floor(posixtime(date2)))*1e3;
              curSysTime = floor(posixtime(date2))*1e3 + msec2;
              delay=seconds(date2-date)-msec/1000;
-             fprintf('pkt delay is:%.3f \n',delay)
+             %fprintf('pkt delay is:%.3f \n',delay)
         end
         function obj=SNRCalc(obj,CSIAmpBuff)
             %dataLen = size(CSIAmpBuff,1);
