@@ -62,14 +62,10 @@ while(1)
             stream2 = stream2.merge_buffers(acceptableDelay);
             stream3 = stream3.merge_buffers(acceptableDelay);
             
-            N1 = size(stream1.pdSignal,1);
-            N2 = size(stream2.pdSignal,1);
-            N3 = size(stream3.pdSignal,1);
-
-            N = min([N1 N2 N3]);
-
-            pd_signal = cat(3, stream1.pdSignal(1:N,:), stream2.pdSignal(1:N,:), stream3.pdSignal(1:N,:));
-            save('data/pd_signal.mat', 'pd_signal');
+            pd_signal = stream1.pdSignal;
+            save('data/pd_signal1.mat', 'pd_signal');
+            %save('data/pd_signal2.mat', 'pd_signal');
+            %save('data/pd_signal3.mat', 'pd_signal');
             save('data/csi_signal.mat',"stream1","stream2","stream3")
             keyboard
         end
