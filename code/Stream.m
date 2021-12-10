@@ -35,8 +35,8 @@ classdef Stream
                     phaseDifference = abs(angle(stream.antenna1.csiBuff(ix1,:)) - angle(stream.antenna2.csiBuff(ix2,:)));
                     stream.pdSignal = [stream.pdSignal; phaseDifference];
                     % store the timestamp, elapsed time, delay
-                    stream.timeBuff = [stream.sysTimeBuff stream.antenna1.timeBuff(ix1)];
-                    stream.delayBuff = [stream.sysTimeBuff stream.antenna1.delayBuff(ix1)];
+                    stream.timeBuff = [stream.timeBuff stream.antenna1.timeBuff(ix1)];
+                    stream.delayBuff = [stream.delayBuff stream.antenna1.delayBuff(ix1)];
                     stream.sysTimeBuff = [stream.sysTimeBuff stream.antenna1.sysTimeBuff(ix1)];
                     ix1 = ix1 + 1;
                     ix2 = ix2 + 1;

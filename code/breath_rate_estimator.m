@@ -26,8 +26,8 @@ for ix = 1:40:(N-window_size)
     br = freq(freq_bins);
     breathing_rates = [breathing_rates; br];
     fig = figure('visible','off');
-    plot(freq, p1(:,20));
-    filename = 'data/images/br_20_' + string(ix) + '.pdf';
+    plot(freq, p1);
+    filename = 'data/images/br_all_' + string(ix) + '.pdf';
     saveas(fig, filename);
 end
 
