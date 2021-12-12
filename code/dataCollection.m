@@ -8,7 +8,7 @@ algo = wifisensAlgo();
 BW = 80;        
 CHIP = '4358';
 
-acceptableDelay = 5;
+acceptableDelay = 15;
 
 sysTimeBuff = [];
 stream1 = Stream(0);
