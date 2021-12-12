@@ -28,6 +28,6 @@ for i in range(0,3000):
         break
     print(measurements)
     # f.write(str(measurements[0]) + '    ' + str(measurements[1]) + '\n')
-savemat(r"ground_truth_12_5_2021_5min_100ms.mat", mdict={'force': force, 'RR_bpm': RR_bpm, 'curr_time': curr_time})
+savemat(r"ground_truth_12_11_2021_5min_100ms.mat", mdict={'force': force, 'RR_bpm': RR_bpm, 'curr_time': curr_time})
 gdx.stop()
 gdx.close()
