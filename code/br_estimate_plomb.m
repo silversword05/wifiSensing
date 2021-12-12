@@ -1,9 +1,9 @@
-csi_signal_mat = load('data/data_4/csi_signal.mat', 'stream1');
-stream1 = csi_signal_mat.stream1;
-stream1.pdSignal = []; stream1.sysTimeBuff = []; stream1.delayBuff = []; stream1.timeBuff = []; 
-stream1 = stream1.merge_buffers(10);
-pd_signal = stream1.pdSignal;
-save('data/pd_signal1.mat', 'pd_signal');
+%csi_signal_mat = load('data/data_4/csi_signal.mat', 'stream1');
+%stream1 = csi_signal_mat.stream1;
+%stream1.pdSignal = []; stream1.sysTimeBuff = []; stream1.delayBuff = []; stream1.timeBuff = []; 
+%stream1 = stream1.merge_buffers(10);
+%pd_signal = stream1.pdSignal;
+%save('data/pd_signal1.mat', 'pd_signal');
 
 % beacon frames sent out every few ms
 beacon_interval = 25;
