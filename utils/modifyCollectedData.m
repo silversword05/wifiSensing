@@ -1,6 +1,6 @@
 clear all; clc; close all;
 
-load('data/data_4/csi_signal.mat');
+load('data/data_15/csi_signal.mat');
 
 totalRowCount = size(stream1.antenna1.csiBuff, 1) + size(stream1.antenna2.csiBuff, 1);
 totalRowCount = totalRowCount + size(stream2.antenna1.csiBuff, 1) + size(stream2.antenna2.csiBuff, 1);
@@ -59,7 +59,7 @@ finalMatrix = fillFinalMatrix(finalMatrix, offset, stream3Ant2Size, stream3.ante
 offset = offset + stream3Ant2Size(1);
 finalMatrix = fillFinalMatrix(finalMatrix, offset, stream3Ant2Size, stream3.antenna2, 3, 2, 1);
 
-writematrix(finalMatrix,'data/data_4/stream-antenna-data.csv')
+writematrix(finalMatrix,'data/data_15/stream-antenna-data.csv')
 
 function finalMatrix = fillFinalMatrix(finalMatrix, offset, sizeTuple, antennaObj, streamNum, antennaNum, realImagCoeff)
     if realImagCoeff == 0
