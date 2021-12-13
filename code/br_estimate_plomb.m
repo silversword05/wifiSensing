@@ -9,7 +9,7 @@
 beacon_interval = 25;
 
 % load the phase difference data of all spatial streams
-pd_signal_mat = load('data/data_10/pd_signal1.mat', 'pd_signal');
+pd_signal_mat = load('data/data_13/pd_signal1.mat', 'pd_signal');
 pd_signal = pd_signal_mat.pd_signal;
 time_signal = pd_signal(:,end-2);
 pd_signal = pd_signal(:,1:end-3);
@@ -27,6 +27,7 @@ next_step_found = false;
 next_start_ix = 1;
 window_ix = start_ix + 1; 
 br_estimates = [];
+br_estimates_all = [];
 timestamps = [];
 % windowing
 while window_ix < N
@@ -38,6 +39,7 @@ while window_ix < N
         [magnitude, freq] = plomb(signal_window, time_window);
         [M,I] = max(magnitude);
         br_estimates = [br_estimates; median(freq(I))];
+        br_estimates_all = [br_estimates_all; freq(I)'];
         timestamps = [timestamps; [time_signal(start_ix) time_signal(window_ix)]];
         %plot(freq, magnitude(:,20));
         %drawnow
@@ -58,8 +60,10 @@ while window_ix < N
     end
 end
 br_estimates = br_estimates * 60;
+br_estimates_all = br_estimates_all * 60;
 disp(sum(br_estimates > 10 & br_estimates < 20));
 plot(br_estimates);
-saveas(gcf,'data/data_10/br_estimates_plomb.fig');
-save('data/data_10/br_estimates_plomb.mat',"br_estimates");
-save('data/data_10/timestamps_plomb.mat',"timestamps");
+saveas(gcf,'data/data_13/br_estimates_plomb.fig');
+save('data/data_13/br_estimates_plomb.mat',"br_estimates");
+save('data/data_13/br_estimates_plomb_all.mat',"br_estimates_all");
+save('data/data_13/timestamps_plomb.mat',"timestamps");

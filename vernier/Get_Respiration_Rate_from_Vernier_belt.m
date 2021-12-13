@@ -1,4 +1,4 @@
-function [respRate, pxx, f] = Get_Respiration_Rate_from_Vernier_belt(Force,time, isPlotDebug, debugPlotTitle)
+function [respRate, pxx, f] = Get_Respiration_Rate_from_Vernier_belt(Force,time, isPlotDebug)
 %GET_RESPIRATION_RATE_FROM_VERNIER_BELT Get respiration rate from a window
 %of data from Vernier respiration belt
 % Input:
