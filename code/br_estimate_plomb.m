@@ -9,7 +9,7 @@
 beacon_interval = 25;
 
 % load the phase difference data of all spatial streams
-pd_signal_mat = load('data/data_13/pd_signal1.mat', 'pd_signal');
+pd_signal_mat = load('data/data_1/pd_signal1.mat', 'pd_signal');
 pd_signal = pd_signal_mat.pd_signal;
 time_signal = pd_signal(:,end-2);
 pd_signal = pd_signal(:,1:end-3);
@@ -63,7 +63,7 @@ br_estimates = br_estimates * 60;
 br_estimates_all = br_estimates_all * 60;
 disp(sum(br_estimates > 10 & br_estimates < 20));
 plot(br_estimates);
-saveas(gcf,'data/data_13/br_estimates_plomb.fig');
-save('data/data_13/br_estimates_plomb.mat',"br_estimates");
-save('data/data_13/br_estimates_plomb_all.mat',"br_estimates_all");
-save('data/data_13/timestamps_plomb.mat',"timestamps");
+saveas(gcf,'data/data_1/br_estimates_plomb.fig');
+save('data/data_1/br_estimates_plomb.mat',"br_estimates");
+save('data/data_1/br_estimates_plomb_all.mat',"br_estimates_all");
+save('data/data_1/timestamps_plomb.mat',"timestamps");
