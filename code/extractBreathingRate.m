@@ -1,5 +1,5 @@
 
-ground_truth = load('data/data_15/ground_truth_12_11_2021_5min_15_100ms.mat');
+ground_truth = load('data/data_1/ground_truth_12_5_2021_5min_1_100ms.mat');
 force = ground_truth.force';
 time_signal = ground_truth.curr_time';
 
@@ -30,7 +30,6 @@ while window_ix < N
         f = f(idx);
         pxx = pxx(idx);
         [freqPeak, loc] = max(pxx);
-        disp(f(loc));
         
         breathing_ground = [breathing_ground; f(loc)];
         timestamps = [timestamps; [time_signal(start_ix) time_signal(window_ix)]];
@@ -43,7 +42,7 @@ while window_ix < N
             window_ix = start_ix + 1;            
         end
     elseif (time_diff > 1 && not(next_step_found))
-        % fprintf("%0.5f | %d | %d\n", time_diff, next_start_ix, start_ix);
+        fprintf("%0.5f | %d | %d\n", time_diff, next_start_ix, start_ix);
         next_start_ix = window_ix;
         next_step_found = true;
     else
@@ -54,5 +53,5 @@ end
 
 breathing_ground = breathing_ground*60;
 plot(breathing_ground)
-save('data/data_15/breathing_ground.mat',"breathing_ground");
-save('data/data_15/timestamps_ground.mat',"timestamps");
+save('data/data_1/breathing_ground.mat',"breathing_ground");
+save('data/data_1/timestamps_ground.mat',"timestamps");
