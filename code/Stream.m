@@ -32,7 +32,7 @@ classdef Stream
                 frameDelay = abs(stream.antenna1.sysTimeBuff(ix1) - stream.antenna2.sysTimeBuff(ix2));
                 if frameDelay < acceptableDelay
                     % phase difference of the csi from two antenna
-                    phaseDifference = abs(angle(stream.antenna1.csiBuff(ix1,:)) - angle(stream.antenna2.csiBuff(ix2,:)));
+                    phaseDifference = stream.antenna1.csiBuff(ix1,:) .* stream.antenna2.csiBuff(ix2,:);
                     stream.pdSignal = [stream.pdSignal; phaseDifference];
                     % store the timestamp, elapsed time, delay
                     stream.timeBuff = [stream.timeBuff stream.antenna1.timeBuff(ix1)];

@@ -1,5 +1,5 @@
 
-ground_truth = load('data/data_1/ground_truth_12_5_2021_5min_1_100ms.mat');
+ground_truth = load('data/data_15/ground_truth_12_11_2021_5min_15_100ms.mat');
 force = ground_truth.force';
 time_signal = ground_truth.curr_time';
 
@@ -21,7 +21,7 @@ R_bound = [0.1 0.6];
 
 while window_ix < N
     time_diff = time_diff_signal(window_ix) - time_diff_signal(start_ix);
-    if (time_diff > 10)
+    if (time_diff > 15)
         fprintf("%0.5f | %d | %d\n", time_diff, window_ix, start_ix);
         time_window = time_diff_signal(start_ix:window_ix);
         signal_window = force(start_ix:window_ix,:);
@@ -53,5 +53,5 @@ end
 
 breathing_ground = breathing_ground*60;
 plot(breathing_ground)
-save('data/data_1/breathing_ground.mat',"breathing_ground");
-save('data/data_1/timestamps_ground.mat',"timestamps");
+save('data/data_15/breathing_ground.mat',"breathing_ground");
+save('data/data_15/timestamps_ground.mat',"timestamps");
