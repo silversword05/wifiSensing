@@ -1,8 +1,8 @@
 function pd_signal = compute_phase_difference(stream)
     pd_signal = [];
     time_ix = size(stream.antenna1.csiBuff, 2) + 1;
-    csi_stream_1 = [stream.antenna1.csiBuff stream.antenna1.timeBuff'];
-    csi_stream_2 = [stream.antenna2.csiBuff stream.antenna2.timeBuff'];
+    csi_stream_1 = [stream.antenna1.csiBuff stream.antenna1.sysTimeBuff'];
+    csi_stream_2 = [stream.antenna2.csiBuff stream.antenna2.sysTimeBuff'];
     % merge both the streams
     ix_1 = 1; ix_2 = 1;
     merged_streams = [];
@@ -41,7 +41,7 @@ function pd_signal = compute_phase_difference(stream)
             csi_frame_1 = merged_streams(ix, 1:time_ix-1);
             csi_frame_2 = merged_streams(ix + 1, 1:time_ix-1);
             phase_difference = angle(csi_frame_1 .* conj(csi_frame_2));
-            pd_signal = [pd_signal; [phase_difference curr_time]];            
+            pd_signal = [pd_signal; [phase_difference curr_time]];
             ix = ix + 2;
         else
             % dropping the earlier packet i.e. frame at index 'ix'
