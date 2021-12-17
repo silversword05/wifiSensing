@@ -57,15 +57,9 @@ while(1)
                 stream3 = stream3.process_data(frameOut.coreNum, curCSI, csi_buff_raw, curTime, curSysTime, curDelay);
         end
         % stop collecting data after 5 minutes
-        if((sysTimeBuff(end) - sysTimeBuff(1))/1e3 > 240)
-            %stream1 = stream1.merge_buffers(acceptableDelay);
-            %stream2 = stream2.merge_buffers(acceptableDelay);
-            %stream3 = stream3.merge_buffers(acceptableDelay);
-            
-            %pd_signal = stream1.pdSignal;
-            %save('data/pd_signal1.mat', 'pd_signal');
-            %save('data/pd_signal2.mat', 'pd_signal');
-            %save('data/pd_signal3.mat', 'pd_signal');
+        if((sysTimeBuff(end) - sysTimeBuff(1))/1e3 > 60*4)
+            pd_signal = compute_phase_difference(stream1);
+            save('data/new_pd_signal.mat', 'pd_signal');
             save('data/csi_signal.mat',"stream1","stream2","stream3")
             keyboard
         end

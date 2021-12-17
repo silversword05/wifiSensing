@@ -14,7 +14,7 @@ end
 
 fprintf("All PD Signals generated ..... \n");
 fprintf("Generating breathing rate estimates ..... \n");
-for k = 7:9
+for k = 16:18
     input_filePath = [base_dir num2str(k) '/new_pd_signal.mat'];
     % load the phase difference data of all spatial streams
     pd_signal_mat = load(input_filePath, 'pd_signal');
@@ -118,5 +118,5 @@ for k = 7:9
     hold on;
     plot(veriner_estimates(1:100:end));
     hold on;
-    plot(br_estimates(:,20));
+    plot(br_estimates(:,30));
 end

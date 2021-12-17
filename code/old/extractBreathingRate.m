@@ -1,8 +1,5 @@
-for k = 10:12
-    num = 5;
-    if (k >= 13)
-        num = 11;
-    end
+for k = 18:18
+    num = 11;
     ground_truth_file = ['data/data_' num2str(k) '/ground_truth_12_' num2str(num) '_2021_5min_' num2str(k) '_100ms.mat'];
     ground_truth = load(ground_truth_file);
     force = ground_truth.force';
