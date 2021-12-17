@@ -1,4 +1,5 @@
 % Assuming the final dataset is in a csv format with X and Y as the columns
+% assuming dataset-format is <sc1 ..... sc208 elapsed-time/time-diff ground-truth>
 
 base_dir = 'data/data_';
 
@@ -50,7 +51,7 @@ for i = 1:length(test_set)
     input_array = table2array(readtable(input_filePath));
     test_dataset = [test_dataset; input_array];
 end
-% assuming dataset-format is <sc1 ..... sc208 elapsed-time/time-diff ground-truth>
+
 x_train = train_dataset(:,1:end-1);
 y_train = train_dataset(:,end);
 x_test = test_dataset(:,1:end-1);

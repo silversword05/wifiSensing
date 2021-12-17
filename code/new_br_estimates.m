@@ -42,9 +42,9 @@ for k = 16:18
         window_time = time_signal(index) * 0.001;
         windowed_signal = pd_signal(index, :);
         % filter the breathing frequencies using bandpass filter
-        filtered_signal = bandpass(windowed_signal, [0.1 0.6], 40);
+        %filtered_signal = bandpass(windowed_signal, [0.1 0.6], 40);
         %plot(window_time, filtered_signal);
-        curr_window_br_estimate = get_respiration_rates(filtered_signal, window_time);
+        curr_window_br_estimate = get_respiration_rates(windowed_signal, window_time);
         if isempty(curr_window_br_estimate)
             fprintf('dataset:%d | CSI | [%d %d] [%.9f %.9f] br_estimates are empty\n', k, start_ix, finish_ix, window_time(1), window_time(end));
             start_ix = start_ix + step;
@@ -114,9 +114,11 @@ for k = 16:18
     fprintf("Completed the processing of gt for dataset-%d\n",k);
 
     figure;
-    plot(breathing_ground);
+    plot(timestamps_gt(:,2)*1e3,breathing_ground,'DisplayName','vernier-estimates');
     hold on;
-    plot(veriner_estimates(1:100:end));
+    plot(time_signal(1:100:end)*1e3, veriner_estimates(1:100:end),'DisplayName','vernier-rates');
     hold on;
-    plot(br_estimates(:,30));
+    plot(timestamps(:,2),mean(br_estimates,2),'DisplayName','Predictions');
+    hold off;
+    legend;
 end
