@@ -58,12 +58,12 @@ while(1)
         end
         % stop collecting data after 5 minutes
         if((sysTimeBuff(end) - sysTimeBuff(1))/1e3 > 240)
-            stream1 = stream1.merge_buffers(acceptableDelay);
-            stream2 = stream2.merge_buffers(acceptableDelay);
-            stream3 = stream3.merge_buffers(acceptableDelay);
+            %stream1 = stream1.merge_buffers(acceptableDelay);
+            %stream2 = stream2.merge_buffers(acceptableDelay);
+            %stream3 = stream3.merge_buffers(acceptableDelay);
             
-            pd_signal = stream1.pdSignal;
-            save('data/pd_signal1.mat', 'pd_signal');
+            %pd_signal = stream1.pdSignal;
+            %save('data/pd_signal1.mat', 'pd_signal');
             %save('data/pd_signal2.mat', 'pd_signal');
             %save('data/pd_signal3.mat', 'pd_signal');
             save('data/csi_signal.mat',"stream1","stream2","stream3")
