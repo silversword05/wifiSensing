@@ -1,5 +1,12 @@
 clear all; clc; close all;
 
+x = "no";
+while (x ~= "yes")
+    prompt = "Warning: Are you pinging the router?";
+    x = lower(input(prompt,'s'));
+end
+
+
 addpath('tcp_udp_ip');                          % Add path to folder containing tcp_udp_ip files
 port = 11233;                                   % Local-Host Port to listen on to
 % sock=pnet('tcpconnect','localhost',port);       % Creates tcp/ip connection to the specified 'hostname' and port
