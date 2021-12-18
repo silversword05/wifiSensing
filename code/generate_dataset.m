@@ -1,6 +1,6 @@
 base_dir = 'data/data_';
 
-for k = 17:17
+for k = 10:18
     input_gt_data = [base_dir num2str(k) '/breathing_ground_ts.mat'];
     breathing_ground_mat = load(input_gt_data, 'breathing_ground');
     breathing_ground = breathing_ground_mat.breathing_ground;
@@ -38,11 +38,14 @@ for k = 17:17
     finalMatrix(:, sub_carrier_cnt+2) = breathing_gt_estimates';
 
     figure;
-    plot(time_diff_mean,breathing_gt_estimates,'DisplayName','gt-estimates');
+    plot(time_diff_mean, breathing_gt_estimates, ...
+        'DisplayName','gt-estimates');
     hold on;
-    plot(time_diff_gt_mean, breathing_ground,'DisplayName','gt-actual');
+    plot(time_diff_gt_mean, breathing_ground, ...
+        'DisplayName','gt-actual');
     hold on;
-    plot(time_diff_mean,mean(br_estimates,2),'DisplayName','csi-estimate');
+    plot(time_diff_mean, mean(br_estimates,2), ...
+        'DisplayName','csi-estimate');
     hold off;
     legend;
 
