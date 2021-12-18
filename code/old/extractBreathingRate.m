@@ -1,4 +1,4 @@
-for k = 18:18
+for k = 19:19
     num = 11;
     ground_truth_file = ['data/data_' num2str(k) '/ground_truth_12_' num2str(num) '_2021_5min_' num2str(k) '_100ms.mat'];
     ground_truth = load(ground_truth_file);
