@@ -7,14 +7,14 @@ test_beacons_set = [17];
 train_beacons_set = [16 18];
 train_dataset_beacons = [];
 for i = 1:length(train_beacons_set)
-    input_filePath = [base_dir num2str(i) '/final_dataset.csv'];
+    input_filePath = [base_dir num2str(train_beacons_set(i)) '/final_dataset.csv'];
     input_array = table2array(readtable(input_filePath));
     train_dataset_beacons = [train_dataset_beacons; input_array];
 end
 
 test_dataset_beacons = [];
 for i = 1:length(test_beacons_set)
-    input_filePath = [base_dir num2str(i) '/final_dataset.csv'];
+    input_filePath = [base_dir num2str(test_beacons_set(i)) '/final_dataset.csv'];
     input_array = table2array(readtable(input_filePath));
     test_dataset_beacons = [test_dataset_beacons; input_array];
 end
