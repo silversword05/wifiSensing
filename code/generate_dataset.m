@@ -1,6 +1,6 @@
 base_dir = 'data/data_';
 
-for k = 10:18
+for k = 12:12
     input_gt_data = [base_dir num2str(k) '/breathing_ground_ts.mat'];
     breathing_ground_mat = load(input_gt_data, 'breathing_ground');
     breathing_ground = breathing_ground_mat.breathing_ground;
