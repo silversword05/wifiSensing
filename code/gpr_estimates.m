@@ -4,7 +4,7 @@
 base_dir = 'data/data_';
 
 dataset = [];
-train_beacons_set = [16 18];
+train_beacons_set = [7 8 9];
 for i = 1:length(train_beacons_set)
     input_filePath = [base_dir num2str(train_beacons_set(i)) '/final_dataset.csv'];
     input_array = table2array(readtable(input_filePath));
@@ -21,13 +21,14 @@ y_train = train_dataset_beacons(:,end);
 rng default;
 gpr_model = fitrgp(x_train,y_train, ...
     'FitMethod','exact','BasisFunction','linear','KernelFunction','squaredexponential', ...
-    'Regularization',0.2, ...
+    'Regularization',0.1, ...
     'OptimizeHyperparameters','auto', ...
     'HyperparameterOptimizationOptions', struct('AcquisitionFunctionName','expected-improvement-plus'));
 % compute the avg loss on 0.25% of the train data
 % avg_cv_loss = kfoldLoss(gpr_model);
 
-test_beacons_set = [17];
+R2_score = []; RMSE = [];
+test_beacons_set = [16 17 18];
 for i = 1:length(test_beacons_set)
     input_filePath = [base_dir num2str(test_beacons_set(i)) '/final_dataset.csv'];
     dataset = table2array(readtable(input_filePath));
@@ -42,8 +43,13 @@ for i = 1:length(test_beacons_set)
     scaled_pred = (pred .* S(end)) + C(end);
     scaled_pred_intervals = (pred_intervals .* S(end)) + C(end);
 
-    RMSE = sqrt(mean((scaled_pred - scaled_y_test).^2)); 
-    fprintf("%.5f - RMSE Loss for full dataset", RMSE);
+    RMSE = [RMSE; [0 test_beacons_set(i) sqrt(mean((scaled_pred - scaled_y_test).^2))]]; 
+    fprintf("%.5f - Actual RMSE Loss for full dataset %d\n", RMSE, test_beacons_set(i));
+
+    rss = sum((y_test - pred).^2);
+    sss = sum((y_test - mean(y_test)).^2);
+    R2_score = [R2_score; [0 test_beacons_set(i) (1 - (rss/sss))]]; 
+    fprintf("%.5f - R2_score Loss for full dataset %d\n", R2_score, test_beacons_set(i));
 
     figure;
     plot(t_test, scaled_pred, 'b-','DisplayName', 'predicitions-gpr');
@@ -59,11 +65,13 @@ for i = 1:length(test_beacons_set)
     legend('Location','best');
     titlename = ['GPR - beacons only - Dataset' num2str(test_beacons_set(i))];
     title(titlename);
+    filename = ['data/images/gpr/new-user/gpr_result_beacons-dataset' num2str(test_beacons_set(i)) '.png'];
+    saveas(gcf, filename);
 
 end
 
 dataset = [];
-train_set = [11 12 13 15 16 17 18];
+train_set = [7 8 9 10 11 12 16 17 18];
 for i = 1:length(train_set)
     input_filePath = [base_dir num2str(train_set(i)) '/final_dataset.csv'];
     input_array = table2array(readtable(input_filePath));
@@ -79,13 +87,13 @@ y_train = train_dataset(:,end);
 rng default;
 gpr_model = fitrgp(x_train,y_train, ...
     'FitMethod','exact','BasisFunction','linear','KernelFunction','squaredexponential', ...
-    'Regularization',0.2, ...
+    'Regularization',0.1, ...
     'OptimizeHyperparameters','auto', ...
     'HyperparameterOptimizationOptions', struct('AcquisitionFunctionName','expected-improvement-plus'));
 % compute the avg loss on 0.25% of the train data
 % avg_cv_loss = kfoldLoss(gpr_model);
 
-test_set = [10 14];
+test_set = [13 14 15];
 for i = 1:length(test_set)
     input_filePath = [base_dir num2str(test_set(i)) '/final_dataset.csv'];
     dataset = table2array(readtable(input_filePath));
@@ -100,8 +108,13 @@ for i = 1:length(test_set)
     scaled_pred = (pred .* S(end)) + C(end);
     scaled_pred_intervals = (pred_intervals .* S(end)) + C(end);
 
-    RMSE = sqrt(mean((scaled_pred - scaled_y_test).^2)); 
-    fprintf("%.5f - RMSE Loss for full dataset", RMSE);
+    RMSE = [RMSE; [1 test_set(i) sqrt(mean((scaled_pred - scaled_y_test).^2))]]; 
+    fprintf("%.5f - RMSE Loss for full dataset - %d\n", RMSE, test_set(i));
+
+    rss = sum((y_test - pred).^2);
+    sss = sum((y_test - mean(y_test)).^2);
+    R2_score = [R2_score; [1 test_set(i) (1 - (rss/sss))]]; 
+    fprintf("%.5f - R2_score Loss for full dataset - %d\n", R2_score, test_set(i));
 
     figure;
     plot(t_test, scaled_pred, 'b-','DisplayName', 'predicitions - gpr');
@@ -117,4 +130,10 @@ for i = 1:length(test_set)
     legend('Location','best');
     titlename = ['GPR - Dataset' num2str(test_set(i))];
     title(titlename);
+    filename = ['data/images/gpr/new-user/gpr_result_full-dataset' num2str(test_set(i)) '.png'];
+    saveas(gcf, filename);
+    close;
 end
+
+writematrix(RMSE,'data/images/gpr/metrics-x-subject-rmse-gpr.txt','Delimiter','tab','WriteMode','append');
+writematrix(R2_score,'data/images/gpr/metrics-x-subject-r2-gpr.txt','Delimiter','tab','WriteMode','append');

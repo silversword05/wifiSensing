@@ -45,9 +45,17 @@ for k = 7:18
         'DisplayName','gt-actual');
     hold on;
     plot(time_diff_mean, mean(br_estimates,2), ...
-        'DisplayName','csi-estimate');
+        'DisplayName','csi-estimate-mean');
+    hold on;
+    plot(time_diff_mean, br_estimates(:,20), ...
+        'DisplayName','csi-estimate-sc20');
     hold off;
-    legend;
+    legend('Location','best');
+    titlename = ['Raw Estimates - Dataset' num2str(k)];
+    title(titlename);
+
+    filename = ['data/data_' num2str(k) '/sp_result_plot.png'];
+    saveas(gcf, filename);
 
     filename = ['data/data_' num2str(k) '/final_dataset.csv'];
     writematrix(finalMatrix,filename);
